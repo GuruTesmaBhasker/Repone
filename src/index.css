@@ -1,0 +1,387 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== BASE STYLES ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --rep-red: #DC2626;
+  --rep-dark-red: #B91C1C;
+  --rep-black: #111111;
+  --rep-dark: #0A0A0A;
+  --rep-light: #F8F9FA;
+  --rep-gray: #374151;
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--rep-light);
+  color: var(--rep-gray);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--rep-red);
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--rep-red);
+  border-radius: 2px;
+}
+
+/* ===== UTILITIES ===== */
+.font-display {
+  font-family: 'Poppins', sans-serif;
+}
+
+.text-outline {
+  -webkit-text-stroke: 1px rgba(220, 38, 38, 0.3);
+  color: transparent;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-left: 3px solid var(--rep-red);
+  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.1);
+}
+
+.noise-overlay {
+  display: none;
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 32px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--rep-red);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
+}
+
+.btn-primary:hover {
+  background: var(--rep-dark-red);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+}
+
+.btn-outline {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 32px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  color: var(--rep-red);
+  background: transparent;
+  border: 2px solid var(--rep-red);
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background: var(--rep-red);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.25);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.5;
+  }
+}
+
+.animate-flicker {
+  animation: flicker 4s infinite;
+}
+
+
+/* ===== CANVAS WRAPPER ===== */
+.canvas-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.8) 85%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== SCROLL INDICATOR ===== */
+.scroll-line {
+  width: 2px;
+  height: 60px;
+  background: linear-gradient(180deg, var(--rep-red), transparent);
+  animation: scrollLine 2s ease-in-out infinite;
+  border-radius: 1px;
+}
+
+@keyframes scrollLine {
+  0%, 100% { 
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% { 
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+/* ===== CARD STYLES ===== */
+.glass-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  box-shadow: 0 16px 48px rgba(220, 38, 38, 0.15);
+  transform: translateY(-4px);
+  border-color: rgba(220, 38, 38, 0.4);
+}
+
+.stat-card {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(185, 28, 28, 0.02) 100%);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 8px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: rgba(220, 38, 38, 0.4);
+  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.1);
+}
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.3), transparent);
+}
+
+/* ===== ANIMATED BORDER ===== */
+@keyframes borderGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(45deg, var(--rep-red), var(--rep-dark-red), #DC2626, var(--rep-dark-red), var(--rep-red));
+  background-size: 300% 300%;
+  border-radius: inherit;
+  z-index: -1;
+  animation: borderGlow 3s ease infinite;
+}
+
+/* ===== GRADIENT TEXT ===== */
+.gradient-text-red {
+  background: linear-gradient(135deg, var(--rep-red) 0%, var(--rep-dark-red) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Remove noise texture */
+.noise-bg::after {
+  display: none;
+}
+
+/* ===== MOBILE-FIRST OPTIMIZATIONS ===== */
+
+/* Dynamic viewport height for mobile browsers */
+@supports (height: 100dvh) {
+  .h-screen-dynamic {
+    height: 100dvh;
+  }
+}
+
+/* Canvas and container mobile optimizations */
+.canvas-wrapper {
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Mobile-first body styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--rep-light);
+  color: var(--rep-gray);
+  overflow-x: hidden;
+  line-height: 1.6;
+  /* Prevent iOS text size adjust */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Smooth scrolling on mobile */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Improve touch scrolling performance */
+  html, body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+  
+  /* Disable hover effects on touch devices */
+  .glass-card:hover,
+  .stat-card:hover {
+    transform: none !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Larger touch targets */
+  .btn-primary,
+  .btn-outline {
+    min-height: 48px;
+    padding: 12px 24px;
+  }
+}
+
+/* Mobile responsive breakpoints */
+@media (max-width: 640px) {
+  /* Smaller headings on tiny screens */
+  h1 {
+    font-size: clamp(2rem, 8vw, 4rem) !important;
+    line-height: 0.9;
+  }
+  
+  h2 {
+    font-size: clamp(1.5rem, 6vw, 3rem) !important;
+    line-height: 0.95;
+  }
+  
+  /* Compact button spacing */
+  .btn-primary,
+  .btn-outline {
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+}
+
+/* Tablet and small desktop */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .btn-primary,
+  .btn-outline {
+    padding: 16px 32px;
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Compact vertical spacing in landscape */
+  .hero-content h1 {
+    margin-bottom: 1rem !important;
+  }
+  
+  .hero-content p {
+    font-size: 14px !important;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+  .safe-area-padding {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-top: max(16px, env(safe-area-inset-top));
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Hardware acceleration for smooth animations */
+.story-section,
+.scroll-canvas,
+.canvas-wrapper {
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+
+/* Improved text rendering on mobile */
+@media (max-width: 768px) {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: always;
+  }
+}
+
