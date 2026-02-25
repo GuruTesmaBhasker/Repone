@@ -7,7 +7,7 @@ import Contact from './pages/Contact'
 
 function App() {
   return (
-    <Router>
+    <Router basename="/Repone">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

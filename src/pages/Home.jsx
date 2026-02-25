@@ -143,8 +143,8 @@ function Home() {
         return new Promise((resolve) => {
           const img = new Image()
           const frameNum = String(i + 1).padStart(3, '0')
-          // Use correct public path for GitHub Pages
-          img.src = `./pull down zip hd/ezgif-frame-${frameNum}.jpg`
+          // Use Vite's import.meta.env.BASE_URL for correct path
+          img.src = `${import.meta.env.BASE_URL}pull down zip hd/ezgif-frame-${frameNum}.jpg`
           
           img.onload = () => {
             loaded++
@@ -177,7 +177,7 @@ function Home() {
         return new Promise((resolve) => {
           const img = new Image()
           const frameNum = String(index + 1).padStart(3, '0')
-          img.src = `./pull down zip hd/ezgif-frame-${frameNum}.jpg`
+          img.src = `${import.meta.env.BASE_URL}pull down zip hd/ezgif-frame-${frameNum}.jpg`
           
           img.onload = () => {
             loaded++
