@@ -92,8 +92,22 @@ function Home() {
   const [images, setImages] = useState([])
   const [scrollProgress, setScrollProgress] = useState(0)
   const [navVisible, setNavVisible] = useState(false)
+  const [currentDeviceType, setCurrentDeviceType] = useState('')
   const lenisRef = useRef(null)
   const scrollContainerRef = useRef(null)
+
+  // Helper function to determine device type for responsive images
+  const getDeviceType = () => {
+    const width = window.innerWidth
+    const isMobile = width < 768
+    const isTablet = width >= 768 && width < 1024
+    return (isMobile || isTablet) ? 'mobile' : 'desktop'
+  }
+
+  // Helper function to get appropriate image folder
+  const getImageFolder = (deviceType) => {
+    return deviceType === 'mobile' ? 'pull down 9 16' : 'pull down zip hd'
+  }
 
   // Initialize Lenis smooth scroll with mobile optimization
   useEffect(() => {
@@ -128,9 +142,12 @@ function Home() {
     }
   }, [])
 
-  // Progressive image loading - mobile optimized
+  // Progressive image loading - responsive sequences based on device type
   useEffect(() => {
     const loadImages = async () => {
+      const deviceType = getDeviceType()
+      setCurrentDeviceType(deviceType)
+      
       const loadedImages = new Array(FRAME_COUNT).fill(null)
       let loaded = 0
       
@@ -138,13 +155,16 @@ function Home() {
       const priorityFrames = 15
       const isMobile = window.innerWidth < 768
       
+      // Choose image folder based on device type
+      const imageFolder = getImageFolder(deviceType)
+      
       // Load priority frames first
       const priorityPromises = Array.from({ length: priorityFrames }, (_, i) => {
         return new Promise((resolve) => {
           const img = new Image()
           const frameNum = String(i + 1).padStart(3, '0')
-          // Use Vite's import.meta.env.BASE_URL for correct path
-          img.src = `${import.meta.env.BASE_URL}pull down zip hd/ezgif-frame-${frameNum}.jpg`
+          // Use appropriate image sequence based on device type
+          img.src = `${import.meta.env.BASE_URL}${imageFolder}/ezgif-frame-${frameNum}.jpg`
           
           img.onload = () => {
             loaded++
@@ -177,7 +197,8 @@ function Home() {
         return new Promise((resolve) => {
           const img = new Image()
           const frameNum = String(index + 1).padStart(3, '0')
-          img.src = `${import.meta.env.BASE_URL}pull down zip hd/ezgif-frame-${frameNum}.jpg`
+          // Use same responsive image folder as priority frames
+          img.src = `${import.meta.env.BASE_URL}${imageFolder}/ezgif-frame-${frameNum}.jpg`
           
           img.onload = () => {
             loaded++
@@ -206,6 +227,119 @@ function Home() {
 
     loadImages()
   }, [])
+
+  // Handle device type changes (orientation change, window resize)
+  useEffect(() => {
+    const handleResize = () => {
+      const newDeviceType = getDeviceType()
+      if (newDeviceType !== currentDeviceType && currentDeviceType !== '') {
+        // Device type changed, reload images with new sequence
+        setIsLoading(true)
+        setNavVisible(false)
+        setLoadProgress(0)
+        
+        // Reload images after a short delay to avoid rapid reloads
+        setTimeout(() => {
+          const event = new Event('deviceTypeChanged')
+          window.dispatchEvent(event)
+        }, 200)
+      }
+    }
+
+    window.addEventListener('resize', handleResize, { passive: true })
+    window.addEventListener('orientationchange', handleResize)
+    
+    // Listen for custom device type change event
+    const handleDeviceTypeChange = () => {
+      // Trigger a re-run of the image loading effect by updating a dependency
+      setCurrentDeviceType('')
+      setTimeout(() => {
+        const loadImages = async () => {
+          const deviceType = getDeviceType()
+          setCurrentDeviceType(deviceType)
+          
+          const loadedImages = new Array(FRAME_COUNT).fill(null)
+          let loaded = 0
+          
+          const priorityFrames = 15
+          const isMobile = window.innerWidth < 768
+          const imageFolder = getImageFolder(deviceType)
+          
+          // Load priority frames first
+          const priorityPromises = Array.from({ length: priorityFrames }, (_, i) => {
+            return new Promise((resolve) => {
+              const img = new Image()
+              const frameNum = String(i + 1).padStart(3, '0')
+              img.src = `${import.meta.env.BASE_URL}${imageFolder}/ezgif-frame-${frameNum}.jpg`
+              
+              img.onload = () => {
+                loaded++
+                loadedImages[i] = img
+                setLoadProgress(Math.round((loaded / FRAME_COUNT) * 100))
+                resolve(img)
+              }
+              
+              img.onerror = () => {
+                loaded++
+                setLoadProgress(Math.round((loaded / FRAME_COUNT) * 100))
+                resolve(null)
+              }
+            })
+          })
+          
+          await Promise.all(priorityPromises)
+          setImages([...loadedImages])
+          
+          setTimeout(() => {
+            setIsLoading(false)
+            setTimeout(() => setNavVisible(true), 200)
+          }, 300)
+          
+          // Continue loading remaining frames in background
+          const remainingPromises = Array.from({ length: FRAME_COUNT - priorityFrames }, (_, i) => {
+            const index = i + priorityFrames
+            return new Promise((resolve) => {
+              const img = new Image()
+              const frameNum = String(index + 1).padStart(3, '0')
+              img.src = `${import.meta.env.BASE_URL}${imageFolder}/ezgif-frame-${frameNum}.jpg`
+              
+              img.onload = () => {
+                loaded++
+                loadedImages[index] = img
+                setLoadProgress(Math.round((loaded / FRAME_COUNT) * 100))
+                setImages([...loadedImages])
+                resolve(img)
+              }
+              
+              img.onerror = () => {
+                loaded++
+                setLoadProgress(Math.round((loaded / FRAME_COUNT) * 100))
+                resolve(null)
+              }
+            })
+          })
+          
+          // Load remaining frames with delay for performance
+          for (let i = 0; i < remainingPromises.length; i++) {
+            if (i > 0 && i % 5 === 0) {
+              await new Promise(resolve => setTimeout(resolve, isMobile ? 50 : 20))
+            }
+            remainingPromises[i]
+          }
+        }
+        
+        loadImages()
+      }, 100)
+    }
+
+    window.addEventListener('deviceTypeChanged', handleDeviceTypeChange)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('orientationchange', handleResize)
+      window.removeEventListener('deviceTypeChanged', handleDeviceTypeChange)
+    }
+  }, [currentDeviceType])
 
   // Mobile-optimized scroll tracking
   useEffect(() => {
@@ -295,5 +429,6 @@ function Home() {
     </div>
   )
 }
+
 
 export default Home

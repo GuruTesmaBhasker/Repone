@@ -86,18 +86,19 @@ export default function ScrollCanvas({ images, scrollProgress, frameCount }) {
     ctx.fillStyle = '#050505'
     ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
-    // Calculate aspect-ratio cover (athlete stays centered, no cropping)
+    // Calculate aspect-ratio cover (works for both 9:16 mobile and 16:9 desktop)
+    // Ensures athlete stays centered and properly framed on all devices
     const imgAspect = img.naturalWidth / img.naturalHeight
     const canvasAspect = canvasWidth / canvasHeight
 
     let drawWidth, drawHeight, drawX, drawY
 
     if (imgAspect > canvasAspect) {
-      // Image wider than canvas - fit to height, center horizontally
+      // Image wider than canvas - fit to height, center horizontally (typical for 16:9 on desktop)
       drawHeight = canvasHeight
       drawWidth = canvasHeight * imgAspect
     } else {
-      // Image taller than canvas - fit to width, center vertically  
+      // Image taller than canvas - fit to width, center vertically (typical for 9:16 on mobile)  
       drawWidth = canvasWidth
       drawHeight = canvasWidth / imgAspect
     }
