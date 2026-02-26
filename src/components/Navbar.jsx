@@ -8,7 +8,8 @@ export default function Navbar({ visible, scrolled }) {
   const navLinks = [
     { name: 'About', href: '/about' },
     { name: 'Trainers', href: '/trainers' },
-    { name: 'Pricing', href: '/pricing' }
+    { name: 'Pricing', href: '/pricing' },
+    { name: 'Contact', href: '/contact' }
   ]
 
   return (
