@@ -44,7 +44,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
           {/* Brand */}
           <div className="max-w-sm">
-            <Link to="/" className="text-3xl font-black tracking-tight text-white inline-block mb-6 font-display">
+            <Link to="/Repone/" className="text-3xl font-black tracking-tight text-white inline-block mb-6 font-display">
               REP<span className="text-rep-red">ONE</span>
             </Link>
             <p className="text-white/40 text-sm leading-relaxed mb-6">
