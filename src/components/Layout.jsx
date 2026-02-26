@@ -15,7 +15,7 @@ export default function Layout({ children }) {
   }, [])
 
   return (
-    <div className="min-h-screen bg-rep-light text-rep-gray">
+    <div className="min-h-screen bg-[#080808] text-white">
       <Navbar scrolled={scrolled} visible={true} />
       <main className="pt-20 min-h-screen">
         {children}
