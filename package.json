@@ -4,11 +4,12 @@
   "version": "2.0.0",
   "type": "module",
   "description": "REP ONE Fitness Club - Ultra-premium scrollytelling experience with React + GSAP",
+  "homepage": "https://GuruTesmaBhasker.github.io/Repone/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "server": "node server.js"
+    
   },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",
