@@ -15,7 +15,7 @@ export default function Navbar({ visible, scrolled }) {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-[1000] h-[70px] flex items-center justify-between px-6 lg:px-12 transition-all duration-300
+        className={`fixed top-0 left-0 right-0 z-[1000] h-14 md:h-16 lg:h-[70px] flex items-center justify-between px-4 sm:px-6 lg:px-12 transition-all duration-300
           ${scrolled ? 'bg-rep-black/95 backdrop-blur-md shadow-lg border-b border-rep-red/20' : 'bg-transparent'}
         `}
         initial={{ opacity: 0, y: -20 }}
@@ -53,9 +53,9 @@ export default function Navbar({ visible, scrolled }) {
           ))}
         </ul>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Button - Min 44px touch target */}
         <button
-          className="lg:hidden p-2 text-white hover:text-rep-red transition-colors"
+          className="lg:hidden flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] text-white hover:text-rep-red transition-colors rounded-lg active:bg-white/10"
           onClick={() => setMobileMenuOpen(true)}
           aria-label="Open menu"
         >
@@ -75,9 +75,9 @@ export default function Navbar({ visible, scrolled }) {
         </Link>
       </motion.nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Psychologically optimized spacing */}
       <motion.div
-        className={`fixed inset-0 bg-rep-black z-[2000] flex flex-col items-center justify-center gap-8
+        className={`fixed inset-0 bg-rep-black z-[2000] flex flex-col items-center justify-center gap-6 sm:gap-8 px-6
           ${mobileMenuOpen ? 'pointer-events-auto' : 'pointer-events-none'}
         `}
         initial={false}
@@ -87,31 +87,36 @@ export default function Navbar({ visible, scrolled }) {
         }}
         transition={{ duration: 0.4 }}
       >
+        {/* Close button - 44px min touch target, positioned in thumb-friendly zone */}
         <button
-          className="absolute top-6 right-6 p-2 text-white hover:text-rep-red transition-colors"
+          className="absolute top-4 right-4 flex items-center justify-center w-12 h-12 min-w-[44px] min-h-[44px] text-white hover:text-rep-red transition-colors rounded-lg active:bg-white/10"
           onClick={() => setMobileMenuOpen(false)}
           aria-label="Close menu"
         >
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
 
-        {navLinks.map((link, index) => (
-          <Link
-            key={link.name}
-            to={link.href}
-            className="text-4xl font-bold text-white hover:text-rep-red transition-colors uppercase tracking-wide font-display"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {link.name}
-          </Link>
-        ))}
+        {/* Navigation links - vertical stacking with generous spacing, thumb-friendly */}
+        <nav className="flex flex-col items-center gap-5 sm:gap-6">
+          {navLinks.map((link, index) => (
+            <Link
+              key={link.name}
+              to={link.href}
+              className="text-2xl sm:text-3xl md:text-4xl font-bold text-white hover:text-rep-red active:text-rep-red transition-colors uppercase tracking-wide font-display py-2 min-h-[44px] flex items-center"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </nav>
 
+        {/* CTA - positioned in lower zone for thumb reach */}
         <Link
           to="/contact"
-          className="btn-primary mt-8"
+          className="btn-primary mt-6 sm:mt-8 w-full max-w-xs text-center min-h-[52px]"
           onClick={() => setMobileMenuOpen(false)}
         >
           Join Now

@@ -35,28 +35,28 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative bg-[#050505] pt-20 pb-8 overflow-hidden">
+    <footer className="relative bg-[#050505] pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8 overflow-hidden">
       {/* Top border */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Main Footer Content */}
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        {/* Main Footer Content - Stack on mobile */}
+        <div className="flex flex-col gap-10 sm:gap-12 md:flex-row md:justify-between md:items-start mb-12 sm:mb-16">
           {/* Brand */}
           <div className="max-w-sm">
-            <Link to="/" className="text-3xl font-black tracking-tight text-white inline-block mb-6 font-display">
+            <Link to="/" className="text-2xl sm:text-3xl font-black tracking-tight text-white inline-block mb-4 sm:mb-6 font-display">
               REP<span className="text-rep-red">ONE</span>
             </Link>
-            <p className="text-white/40 text-sm leading-relaxed mb-6">
+            <p className="text-white/40 text-sm leading-relaxed mb-5 sm:mb-6">
               Salem's premier fitness destination. Transform your body and mind with elite training, state-of-the-art equipment, and a community that pushes you to be your best.
             </p>
-            {/* Social links */}
-            <div className="flex gap-4">
+            {/* Social links - Min 44px touch targets */}
+            <div className="flex gap-3 sm:gap-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
                   href={social.href}
-                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-rep-red/20 hover:border-rep-red/30 hover:text-rep-red transition-all duration-300"
+                  className="w-11 h-11 sm:w-10 sm:h-10 min-w-[44px] min-h-[44px] rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-rep-red/20 hover:border-rep-red/30 hover:text-rep-red transition-all duration-300 active:bg-rep-red/30"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -65,22 +65,22 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* New Simple Links */}
-          <div className="flex flex-wrap gap-8 md:gap-12">
-             <div className="space-y-4">
-                <Link to="/about" className="block text-white/60 hover:text-rep-red transition-colors">About Us</Link>
-                <Link to="/trainers" className="block text-white/60 hover:text-rep-red transition-colors">Trainers</Link>
+          {/* Navigation Links - Larger touch targets */}
+          <div className="flex flex-wrap gap-6 sm:gap-8 md:gap-12">
+             <div className="space-y-3 sm:space-y-4">
+                <Link to="/about" className="block text-white/60 hover:text-rep-red transition-colors py-1 min-h-[44px] flex items-center">About Us</Link>
+                <Link to="/trainers" className="block text-white/60 hover:text-rep-red transition-colors py-1 min-h-[44px] flex items-center">Trainers</Link>
              </div>
-             <div className="space-y-4">
-                <Link to="/pricing" className="block text-white/60 hover:text-rep-red transition-colors">Pricing</Link>
-                <Link to="/contact" className="block text-white/60 hover:text-rep-red transition-colors">Contact</Link>
+             <div className="space-y-3 sm:space-y-4">
+                <Link to="/pricing" className="block text-white/60 hover:text-rep-red transition-colors py-1 min-h-[44px] flex items-center">Pricing</Link>
+                <Link to="/contact" className="block text-white/60 hover:text-rep-red transition-colors py-1 min-h-[44px] flex items-center">Contact</Link>
              </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-white/30">
+        <div className="pt-6 sm:pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-[11px] sm:text-xs text-white/30 text-center md:text-left">
             © {currentYear} REP ONE Fitness Club. All rights reserved.
           </p>
         </div>

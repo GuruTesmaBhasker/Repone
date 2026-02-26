@@ -32,27 +32,30 @@ export default function StorySection({ section, scrollProgress }) {
     return { isVisible: visible, opacity: op, translateY: ty, scale: sc }
   }, [scrollProgress, start, end])
 
-  // Position classes - Clean light theme alignment
+  // Position classes - Mobile-first with psychologically optimized spacing
+  // Mobile: All sections stack vertically with consistent left-aligned layout
+  // Generous horizontal padding (16-24px) for breathing room
   const positionClasses = {
-    left: 'left-[5%] md:left-[8%] max-w-[500px] text-left border-l-4 border-rep-red pl-6 md:pl-10',
-    right: 'right-[5%] md:right-[8%] max-w-[500px] text-right border-r-4 border-rep-gray/20 pr-6 md:pr-10',
-    center: 'left-1/2 -translate-x-1/2 max-w-[1000px] text-center'
+    left: 'left-4 right-4 sm:left-5 sm:right-5 md:left-[8%] md:right-auto md:max-w-[500px] text-left border-l-4 border-rep-red pl-5 sm:pl-6 md:pl-10',
+    right: 'left-4 right-4 sm:left-5 sm:right-5 md:left-auto md:right-[8%] md:max-w-[500px] md:text-right md:border-l-0 md:border-r-4 md:border-rep-gray/20 md:pr-10 md:pl-0 text-left border-l-4 border-rep-red pl-5 sm:pl-6',
+    // Center: Use left-0 right-0 with flexbox centering - no translate-x needed
+    center: 'left-0 right-0 flex justify-center px-4 sm:px-6 text-center'
   }
 
-  const mobilePositionClasses = 'max-lg:left-5 max-lg:right-5 max-lg:max-w-none max-lg:translate-x-0 max-lg:text-left max-lg:border-l-4 max-lg:border-rep-red max-lg:pl-6 max-lg:pr-0'
+  // No additional mobile override needed - built mobile-first above
+  const mobilePositionClasses = ''
 
   if (!content) return null
 
   return (
     <motion.div
-      className={`absolute top-1/2 -translate-y-1/2 pointer-events-auto
+      className={`absolute top-1/2 pointer-events-auto
         ${positionClasses[position]} ${position === 'center' ? '' : mobilePositionClasses}
       `}
       style={{
         opacity,
-        transform: position === 'center' 
-          ? `translate(-50%, calc(-50% + ${translateY}px)) scale(${scale})`
-          : `translateY(calc(-50% + ${translateY}px)) scale(${scale})`
+        // Only apply Y translation and scale - X centering handled by flexbox for center position
+        transform: `translateY(calc(-50% + ${translateY}px)) scale(${scale})`
       }}
     >
       {/* Professional coordinate display */}
@@ -61,69 +64,79 @@ export default function StorySection({ section, scrollProgress }) {
       </div>
 
       {content.isHero ? (
-        // Hero Section - Clean Red/Light Design
-        <div className="hero-content relative">
+        // Hero Section - Mobile-first with psychological spacing
+        // Headline: 2-3 lines max on mobile, centered in upper-middle viewport area
+        <div className="hero-content relative py-6 sm:py-8 max-w-[1000px]">
           <div className="overflow-hidden">
             <motion.p 
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display text-sm md:text-base font-semibold tracking-[0.3em] text-rep-red mb-6 md:mb-10 uppercase"
+              className="font-display text-[11px] sm:text-xs md:text-base font-semibold tracking-[0.25em] sm:tracking-[0.3em] text-rep-red mb-4 sm:mb-6 md:mb-10 uppercase"
             >
               {content.label}
             </motion.p>
           </div>
           
-          <h1 className="text-[clamp(72px,16vw,200px)] font-black leading-[0.85] mb-8 md:mb-12 font-display text-rep-red">
+          {/* Headline: BIG for mobile/tablet, normal for desktop */}
+          {/* Kept to 2-3 lines max via responsive clamping */}
+          <h1 className="text-[clamp(80px,35vw,400px)] sm:text-[clamp(120px,45vw,500px)] md:text-[clamp(72px,16vw,200px)] font-black leading-[0.75] mb-6 sm:mb-8 md:mb-12 font-display text-rep-red">
             <span className="block">{content.heading}</span>
           </h1>
           
-          <div className="flex items-center justify-center gap-6">
-             <span className="h-[2px] w-16 bg-rep-red hidden md:block"></span>
-             <p className="font-sans text-sm md:text-lg text-rep-gray/80 tracking-wide font-medium">
+          {/* Subtitle with generous breathing space */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+             <span className="h-[2px] w-12 sm:w-16 bg-rep-red hidden sm:block"></span>
+             <p className="font-sans text-sm sm:text-base md:text-lg text-white tracking-wide font-medium max-w-[90%] sm:max-w-none leading-relaxed">
                {content.subtitle}
              </p>
-             <span className="h-[2px] w-16 bg-rep-red hidden md:block"></span>
+             <span className="h-[2px] w-12 sm:w-16 bg-rep-red hidden sm:block"></span>
           </div>
         </div>
       ) : content.isCta ? (
-        // CTA Section - Premium Call to Action with Light Background
-        <div className="cta-section relative z-10 bg-white/95 backdrop-blur-md p-12 md:p-16 rounded-lg border border-rep-red/30 shadow-2xl">
-          <h2 className="text-[clamp(48px,8vw,96px)] font-black leading-[0.9] mb-8 text-rep-red font-display">
+        // CTA Section - Mobile-first with breathing room and thumb-friendly buttons
+        <div className="cta-section relative z-10 bg-white/95 backdrop-blur-md p-6 sm:p-10 md:p-16 rounded-lg border border-rep-red/30 shadow-2xl w-full max-w-[600px] md:max-w-[800px]">
+          {/* CTA Headline: Scaled for mobile readability */}
+          <h2 className="text-[clamp(32px,7vw,96px)] sm:text-[clamp(40px,8vw,96px)] font-black leading-[0.9] mb-6 sm:mb-8 text-rep-red font-display">
             {content.heading}
           </h2>
           
-          <div className="max-w-xl mx-auto border-t border-b border-rep-red/30 py-8 mb-12">
-            <p className="font-sans text-lg md:text-xl text-rep-gray leading-relaxed font-medium">
+          {/* Subtitle with generous vertical padding */}
+          <div className="max-w-xl mx-auto border-t border-b border-rep-red/30 py-5 sm:py-6 md:py-8 mb-8 sm:mb-10 md:mb-12">
+            <p className="font-sans text-base sm:text-lg md:text-xl text-rep-gray leading-relaxed font-medium">
               {content.subtitle}
             </p>
           </div>
           
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-            <a href="/contact" className="btn-primary w-full md:w-auto">
+          {/* CTA buttons - Full width on mobile, centered with min 44px height */}
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-center sm:gap-6">
+            <a href="/contact" className="btn-primary w-full sm:w-auto min-h-[52px] flex items-center justify-center">
               <span>Start Training</span>
             </a>
-            <a href="/pricing" className="btn-outline w-full md:w-auto group">
+            <a href="/pricing" className="btn-outline w-full sm:w-auto min-h-[52px] flex items-center justify-center group">
               <span className="group-hover:translate-x-1 transition-transform inline-block">View Plans →</span>
             </a>
           </div>
         </div>
       ) : (
-        // Regular Section - Clean Editorial Style
-        <div className="relative">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-3 h-3 bg-rep-red rounded-full"></div>
-            <p className="font-display text-xs md:text-sm font-bold tracking-[0.2em] text-rep-red uppercase">
+        // Regular Section - Mobile-first editorial style with psychological spacing
+        <div className="relative py-4 sm:py-6">
+          {/* Section label with visual marker */}
+          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-rep-red rounded-full"></div>
+            <p className="font-display text-[10px] sm:text-xs md:text-sm font-bold tracking-[0.15em] sm:tracking-[0.2em] text-rep-red uppercase">
               {content.label}
             </p>
           </div>
           
-          <h2 className="text-[clamp(48px,7vw,84px)] font-black leading-[0.9] mb-8 text-rep-red font-display">
+          {/* Section heading: 28-36px mobile, responsive scaling */}
+          <h2 className="text-[clamp(28px,6vw,84px)] sm:text-[clamp(36px,7vw,84px)] font-black leading-[0.9] mb-5 sm:mb-6 md:mb-8 text-rep-red font-display">
             {content.heading}<span className="text-rep-red/60">.</span>
           </h2>
           
-          <div className="space-y-6 relative">
-            {/* Premium accent line */}
+          {/* Content lines: 15-17px with relaxed line-height (1.6-1.7) */}
+          <div className="space-y-4 sm:space-y-5 md:space-y-6 relative">
+            {/* Premium accent line - desktop only */}
             {position === 'right' && (
               <div className="absolute -right-14 top-0 h-full w-[3px] bg-gradient-to-b from-rep-red to-transparent opacity-50 hidden md:block rounded-full"></div>
             )}
@@ -131,7 +144,7 @@ export default function StorySection({ section, scrollProgress }) {
             {content.lines?.map((line, index) => (
               <p 
                 key={index}
-                className="font-sans text-[clamp(16px,1.2vw,20px)] text-rep-gray leading-relaxed font-medium"
+                className="font-sans text-[15px] sm:text-base md:text-[clamp(16px,1.2vw,20px)] text-white leading-[1.65] sm:leading-relaxed font-medium max-w-[40ch] sm:max-w-none"
               >
                 {line}
               </p>

@@ -393,11 +393,13 @@ function Home() {
       <Navbar visible={navVisible} scrolled={scrollProgress > 0.02} />
       
       {/* Mobile-First Fullscreen Canvas Container */}
+      {/* Reduced scroll height on mobile for faster progression while maintaining immersion */}
       <div 
         ref={scrollContainerRef}
         className="relative"
-        style={{ height: window.innerWidth < 768 ? '350vh' : '400vh' }}
+        style={{ height: window.innerWidth < 640 ? '300vh' : (window.innerWidth < 768 ? '350vh' : '400vh') }}
       >
+        {/* Sticky canvas with dynamic viewport height for mobile browsers */}
         <div className="sticky top-0 left-0 w-full h-screen h-[100dvh] bg-[#050505] overflow-hidden">
           {/* Fullscreen Canvas */}
           <ScrollCanvas 
@@ -406,7 +408,7 @@ function Home() {
             frameCount={FRAME_COUNT}
           />
           
-          {/* Text Overlays with Original Positioning */}
+          {/* Text Overlays - Positioned for mobile breathing room */}
           <div className="absolute inset-0 pointer-events-none z-10">
             {STORY_SECTIONS.map((section) => (
               <StorySection
@@ -421,7 +423,10 @@ function Home() {
 
       <ScrollIndicator visible={scrollProgress < 0.05} />
 
-      {/* Additional Sections */}
+      {/* Section divider for visual breathing room */}
+      <div className="h-8 sm:h-12 md:h-16 bg-[#0a0a0a]" />
+
+      {/* Additional Sections with generous vertical spacing */}
       <StatsSection />
       <ProgramsSection />
       <CTASection />

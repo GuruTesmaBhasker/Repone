@@ -84,16 +84,18 @@ h1, h2, h3, h4 {
   display: none;
 }
 
-/* ===== BUTTONS ===== */
+/* ===== BUTTONS - Mobile-First with Thumb-Friendly Sizing ===== */
 .btn-primary {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 16px 32px;
+  /* Mobile-first: generous padding for thumb comfort */
+  padding: 14px 24px;
+  min-height: 48px;
   font-family: 'Poppins', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.025em;
   text-transform: uppercase;
@@ -105,6 +107,20 @@ h1, h2, h3, h4 {
   text-decoration: none;
   transition: all 0.3s ease;
   box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
+  /* Prevent text selection on mobile */
+  -webkit-user-select: none;
+  user-select: none;
+  /* Optimize touch response */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scale up button on larger screens */
+@media (min-width: 640px) {
+  .btn-primary {
+    padding: 16px 32px;
+    font-size: 14px;
+    min-height: 52px;
+  }
 }
 
 .btn-primary:hover {
@@ -113,15 +129,22 @@ h1, h2, h3, h4 {
   box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
 }
 
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
+}
+
 .btn-outline {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 16px 32px;
+  /* Mobile-first: generous padding */
+  padding: 14px 24px;
+  min-height: 48px;
   font-family: 'Poppins', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.025em;
   text-transform: uppercase;
@@ -132,6 +155,17 @@ h1, h2, h3, h4 {
   cursor: pointer;
   text-decoration: none;
   transition: all 0.3s ease;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 640px) {
+  .btn-outline {
+    padding: 16px 32px;
+    font-size: 14px;
+    min-height: 52px;
+  }
 }
 
 .btn-outline:hover {
@@ -139,6 +173,10 @@ h1, h2, h3, h4 {
   color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(220, 38, 38, 0.25);
+}
+
+.btn-outline:active {
+  transform: translateY(0);
 }
 
 /* ===== ANIMATIONS ===== */
@@ -194,16 +232,31 @@ h1, h2, h3, h4 {
   }
 }
 
-/* ===== CARD STYLES ===== */
+/* ===== CARD STYLES - Mobile-First ===== */
 .glass-card {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 32px;
+  /* Mobile-first: compact border radius */
+  border-radius: 16px;
+  /* Mobile-first: comfortable padding */
+  padding: 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
+}
+
+@media (min-width: 640px) {
+  .glass-card {
+    border-radius: 20px;
+    padding: 28px;
+  }
+}
+
+@media (min-width: 768px) {
+  .glass-card {
+    padding: 32px;
+  }
 }
 
 .glass-card:hover {
@@ -217,8 +270,21 @@ h1, h2, h3, h4 {
   background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(185, 28, 28, 0.02) 100%);
   border: 1px solid rgba(220, 38, 38, 0.2);
   border-radius: 8px;
-  padding: 24px;
+  /* Mobile-first padding */
+  padding: 16px;
   transition: all 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .stat-card {
+    padding: 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .stat-card {
+    padding: 24px;
+  }
 }
 
 .stat-card:hover {
@@ -263,29 +329,17 @@ h1, h2, h3, h4 {
   display: none;
 }
 
-/* ===== MOBILE-FIRST OPTIMIZATIONS ===== */
+/* ===== MOBILE-FIRST TYPOGRAPHY PSYCHOLOGY ===== */
 
-/* Dynamic viewport height for mobile browsers */
-@supports (height: 100dvh) {
-  .h-screen-dynamic {
-    height: 100dvh;
-  }
-}
-
-/* Canvas and container mobile optimizations */
-.canvas-wrapper {
-  will-change: transform;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-}
-
-/* Mobile-first body styles */
+/* Base text: Comfortable reading size with relaxed line-height */
 body {
   font-family: 'Inter', sans-serif;
   background-color: var(--rep-light);
   color: var(--rep-gray);
   overflow-x: hidden;
-  line-height: 1.6;
+  /* Mobile-first: 16px base, relaxed line-height for readability */
+  font-size: 16px;
+  line-height: 1.65;
   /* Prevent iOS text size adjust */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -302,44 +356,62 @@ body {
     overscroll-behavior-y: contain;
   }
   
-  /* Disable hover effects on touch devices */
+  /* Disable hover transform effects on touch devices for performance */
   .glass-card:hover,
   .stat-card:hover {
     transform: none !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   }
   
-  /* Larger touch targets */
+  /* Keep subtle hover visual feedback */
+  .glass-card:active {
+    border-color: rgba(220, 38, 38, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  
+  .stat-card:active {
+    border-color: rgba(220, 38, 38, 0.4);
+  }
+  
+  /* Ensure minimum touch targets */
   .btn-primary,
   .btn-outline {
     min-height: 48px;
-    padding: 12px 24px;
   }
 }
 
-/* Mobile responsive breakpoints */
+/* Mobile responsive breakpoints - Enhanced */
 @media (max-width: 640px) {
-  /* Smaller headings on tiny screens */
+  /* Headings: 28-36px range for mobile comfort */
   h1 {
-    font-size: clamp(2rem, 8vw, 4rem) !important;
+    font-size: clamp(1.75rem, 8vw, 3rem) !important;
     line-height: 0.9;
+    letter-spacing: -0.01em;
   }
   
   h2 {
-    font-size: clamp(1.5rem, 6vw, 3rem) !important;
+    font-size: clamp(1.5rem, 6vw, 2.5rem) !important;
     line-height: 0.95;
   }
   
-  /* Compact button spacing */
-  .btn-primary,
-  .btn-outline {
-    padding: 14px 24px;
-    font-size: 14px;
+  h3 {
+    font-size: clamp(1.125rem, 4vw, 1.5rem) !important;
+    line-height: 1.1;
+  }
+  
+  /* Body text: 15-16px for mobile readability */
+  p {
+    font-size: 15px;
+    line-height: 1.65;
   }
 }
 
 /* Tablet and small desktop */
 @media (min-width: 641px) and (max-width: 1024px) {
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
   .btn-primary,
   .btn-outline {
     padding: 16px 32px;
@@ -350,7 +422,7 @@ body {
 @media (max-height: 500px) and (orientation: landscape) {
   /* Compact vertical spacing in landscape */
   .hero-content h1 {
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.75rem !important;
   }
   
   .hero-content p {
@@ -366,6 +438,20 @@ body {
     padding-top: max(16px, env(safe-area-inset-top));
     padding-bottom: max(16px, env(safe-area-inset-bottom));
   }
+}
+
+/* Dynamic viewport height for mobile browsers */
+@supports (height: 100dvh) {
+  .h-screen-dynamic {
+    height: 100dvh;
+  }
+}
+
+/* Canvas and container mobile optimizations */
+.canvas-wrapper {
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 /* Hardware acceleration for smooth animations */
@@ -385,6 +471,64 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-smooth: always;
+  }
+}
+
+/* ===== PSYCHOLOGICAL SPACING UTILITIES ===== */
+/* Generous vertical spacing between sections (64-96px range) */
+.section-spacing {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+@media (min-width: 640px) {
+  .section-spacing {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+}
+
+/* Breathing room before headings */
+.heading-space {
+  margin-top: 32px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 640px) {
+  .heading-space {
+    margin-top: 48px;
+    margin-bottom: 32px;
+  }
+}
+
+/* Consistent horizontal padding - mobile 16px, larger screens 24px */
+.container-padding {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+@media (min-width: 640px) {
+  .container-padding {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* Max text width for comfortable reading - prevents >40 char lines on mobile */
+.readable-text {
+  max-width: 40ch;
+}
+
+@media (min-width: 640px) {
+  .readable-text {
+    max-width: none;
   }
 }
 

@@ -63,23 +63,23 @@ function ProgramCard({ program, index }) {
   return (
     <motion.div
       ref={ref}
-      className="glass-card group cursor-pointer"
+      className="glass-card group cursor-pointer p-5 sm:p-6 md:p-8"
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* Icon */}
-      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-rep-red/20 to-rep-red/10 flex items-center justify-center mb-6 text-rep-red group-hover:scale-110 transition-transform duration-300">
+      {/* Icon - Slightly smaller on mobile */}
+      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-rep-red/20 to-rep-red/10 flex items-center justify-center mb-4 sm:mb-6 text-rep-red group-hover:scale-110 transition-transform duration-300">
         {program.icon}
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-rep-red transition-colors font-display">
+      <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-rep-red transition-colors font-display">
         {program.title}
       </h3>
 
-      {/* Description */}
-      <p className="text-white/50 text-sm leading-relaxed mb-6">
+      {/* Description - Relaxed line-height for readability */}
+      <p className="text-white/50 text-sm leading-relaxed mb-4 sm:mb-6">
         {program.description}
       </p>
 
@@ -87,14 +87,14 @@ function ProgramCard({ program, index }) {
       <ul className="space-y-2">
         {program.features.map((feature) => (
           <li key={feature} className="flex items-center gap-2 text-xs text-white/40">
-            <span className="w-1 h-1 rounded-full bg-rep-red" />
+            <span className="w-1 h-1 rounded-full bg-rep-red flex-shrink-0" />
             {feature}
           </li>
         ))}
       </ul>
 
       {/* Hover arrow */}
-      <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="absolute bottom-5 right-5 sm:bottom-6 sm:right-6 opacity-0 group-hover:opacity-100 transition-opacity">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-rep-red">
           <path d="M7 17L17 7M17 7H7M17 7V17" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
@@ -110,34 +110,34 @@ export default function ProgramsSection() {
   return (
     <section 
       ref={ref}
-      className="relative py-32 overflow-hidden bg-[#080808]"
+      className="relative py-16 sm:py-24 md:py-32 overflow-hidden bg-[#080808]"
       id="programs"
     >
       {/* Background gradient */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-rep-red/5 rounded-full blur-[200px]" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-rep-red/5 rounded-full blur-[200px]" />
+      <div className="absolute top-0 right-0 w-[300px] sm:w-[400px] md:w-[500px] h-[300px] sm:h-[400px] md:h-[500px] bg-rep-red/5 rounded-full blur-[150px] sm:blur-[200px]" />
+      <div className="absolute bottom-0 left-0 w-[300px] sm:w-[400px] md:w-[500px] h-[300px] sm:h-[400px] md:h-[500px] bg-rep-red/5 rounded-full blur-[150px] sm:blur-[200px]" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        {/* Header */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+        {/* Header - Mobile-first typography */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-12 md:mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-[11px] font-bold tracking-[0.4em] uppercase text-rep-red mb-4">
+          <p className="text-[10px] sm:text-[11px] font-bold tracking-[0.3em] sm:tracking-[0.4em] uppercase text-rep-red mb-3 sm:mb-4">
             Training Programs
           </p>
-          <h2 className="text-[clamp(36px,5vw,64px)] font-black text-white tracking-tight mb-4 font-display">
+          <h2 className="text-[clamp(28px,6vw,64px)] sm:text-[clamp(36px,5vw,64px)] font-black text-white tracking-tight mb-3 sm:mb-4 font-display">
             Choose Your <span className="text-rep-red">Path</span>
           </h2>
-          <p className="text-white/40 max-w-xl mx-auto">
+          <p className="text-white/40 max-w-xl mx-auto text-sm sm:text-base px-2 sm:px-0">
             Whether you're building strength, chasing aesthetics, or improving conditioning — we have a program for you.
           </p>
         </motion.div>
 
-        {/* Programs Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Programs Grid - Single column mobile, 2 col tablet, 4 col desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
           {programs.map((program, index) => (
             <ProgramCard key={program.id} program={program} index={index} />
           ))}
