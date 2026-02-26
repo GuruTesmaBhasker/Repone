@@ -103,7 +103,7 @@ export default function StorySection({ section, scrollProgress }) {
           
           {/* Subtitle with generous vertical padding */}
           <div className="max-w-xl mx-auto border-t border-b border-rep-red/30 py-5 sm:py-6 md:py-8 mb-8 sm:mb-10 md:mb-12">
-            <p className="font-sans text-base sm:text-lg md:text-xl text-rep-gray leading-relaxed font-medium">
+            <p className="font-sans text-base sm:text-lg md:text-xl text-white leading-relaxed font-medium">
               {content.subtitle}
             </p>
           </div>
