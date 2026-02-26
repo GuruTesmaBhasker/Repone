@@ -8,11 +8,11 @@ import Contact from './pages/Contact'
 function App() {
   return (
     <Routes>
-      <Route path="/Repone/" element={<Home />} />
-      <Route path="/Repone/about" element={<About />} />
-      <Route path="/Repone/pricing" element={<Pricing />} />
-      <Route path="/Repone/trainers" element={<Trainers />} />
-      <Route path="/Repone/contact" element={<Contact />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/pricing" element={<Pricing />} />
+      <Route path="/trainers" element={<Trainers />} />
+      <Route path="/contact" element={<Contact />} />
     </Routes>
   )
 }

@@ -6,10 +6,10 @@ export default function Navbar({ visible, scrolled }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navLinks = [
-    { name: 'About', href: '/Repone/about' },
-    { name: 'Trainers', href: '/Repone/trainers' },
-    { name: 'Pricing', href: '/Repone/pricing' },
-    { name: 'Contact', href: '/Repone/contact' }
+    { name: 'About', href: '/about' },
+    { name: 'Trainers', href: '/trainers' },
+    { name: 'Pricing', href: '/pricing' },
+    { name: 'Contact', href: '/contact' }
   ]
 
   return (
@@ -27,7 +27,7 @@ export default function Navbar({ visible, scrolled }) {
       >
         {/* Logo */}
         <Link 
-          to="/Repone/" 
+          to="/" 
           className="flex items-center gap-2 text-2xl font-bold text-white hover:text-rep-red transition-colors font-display"
         >
           <div className="w-8 h-8 bg-rep-red rounded-full flex items-center justify-center">
@@ -68,7 +68,7 @@ export default function Navbar({ visible, scrolled }) {
 
         {/* CTA Button */}
         <Link
-          to="/Repone/contact"
+          to="/contact"
           className="hidden lg:block btn-primary"
         >
           Join Now
@@ -110,7 +110,7 @@ export default function Navbar({ visible, scrolled }) {
         ))}
 
         <Link
-          to="/Repone/contact"
+          to="/contact"
           className="btn-primary mt-8"
           onClick={() => setMobileMenuOpen(false)}
         >
